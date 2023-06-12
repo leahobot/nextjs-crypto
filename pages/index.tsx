@@ -43,14 +43,22 @@ export default function Home({ coins }: { coins: Coins }) {
 }
 
 export const getStaticProps = async () => {
-	const response = await fetch(
-		"https://api.coinstats.app/public/v1/coins?skip=0&limit=10",
-	);
+	try {
+		const response = await fetch(
+			"https://api.coinstats.app/public/v1/coins?skip=0&limit=50",
+		);
 
-	const data = await response.json();
-	return {
-		props: {
-			coins: data,
-		},
-	};
+		const data = await response.json();
+		return {
+			props: {
+				coins: data,
+			},
+		};
+	} catch (error) {
+		return {
+			props: {
+				coins: [],
+			},
+		};
+	}
 };
